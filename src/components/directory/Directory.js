@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import './directory.styles.scss';
-import PropTypes from 'prop-types';
 
 import MenuItem from '../menu-item/MenuItem';
 
@@ -54,7 +53,5 @@ const Directory = () => {
     </div>
   );
 };
-
-Directory.propTypes = {};
 
 export default Directory;
