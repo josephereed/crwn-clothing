@@ -1,13 +1,14 @@
 import React from 'react';
 import './header.styles.scss';
 import { Link } from 'react-router-dom';
+import { auth } from '../../firebase/firebase.utils';
 import logo from '../../assets/crown.svg';
 
-const Header = () => {
+const Header = ({ currentUser }) => {
   return (
     <div>
       <div className="header">
-        <Link class="logo-container" to="/">
+        <Link className="logo-container" to="/">
           <img src={logo} alt="logo" />
         </Link>
         <ul>
@@ -21,9 +22,32 @@ const Header = () => {
             </Link>
           </li>
           <li>
-            <Link className="option" to="/contact" style={{ color: 'inherit', textDecoration: 'inherit'}}>
+            <Link
+              className="option"
+              to="/contact"
+              style={{ color: 'inherit', textDecoration: 'inherit' }}
+            >
               CONTACT
             </Link>
+          </li>
+          <li>
+            {currentUser ? (
+              <Link
+                className="option"
+                onClick={() => auth.signOut()}
+                style={{ color: 'inherit', textDecoration: 'inherit' }}
+              >
+                SIGN OUT
+              </Link>
+            ) : (
+              <Link
+                className="option"
+                to="/signin"
+                style={{ color: 'inherit', textDecoration: 'inherit' }}
+              >
+                SIGN IN
+              </Link>
+            )}
           </li>
         </ul>
       </div>

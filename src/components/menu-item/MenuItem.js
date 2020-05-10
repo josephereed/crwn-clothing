@@ -18,7 +18,7 @@ const MenuItem = ({ title, imageUrl, size, linkUrl, match, history }) => (
 
 MenuItem.propTypes = {
   title: PropTypes.string.isRequired,
-  img: PropTypes.string.isRequired
+  imageUrl: PropTypes.string.isRequired
 };
 
 export default withRouter(MenuItem);
