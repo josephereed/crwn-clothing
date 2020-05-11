@@ -1,37 +1,57 @@
-import React, {useState, useEffect } from 'react';
-import { Route, Switch } from 'react-router-dom';
-import Header from './components/header/Header';
-import Homepage from './pages/homepage/Homepage';
-import ShopPage from './pages/shop/ShopPage';
-import './App.scss';
-import SignInAndSignUp from './pages/signin/SignInAndSignUp';
-import { auth } from './firebase/firebase.utils';
+import React, { useState, useEffect, useRef } from 'react';
+import { Switch, Route } from 'react-router-dom';
 
-function App() {
+import './App.scss';
+
+import HomePage from './pages/homepage/Homepage';
+import ShopPage from './pages/shop/ShopPage';
+import SignInAndSignUp from './pages/signin/SignInAndSignUp';
+import Header from './components/header/Header';
+import { auth, createUserProfileDocument } from './firebase/firebase.utils';
+
+const App = () => {
   const [initialState, setInitialState] = useState({
     currentUser: null
   });
+  const { currentUser } = initialState;
 
-  var unsubscribeFromAuth = null;
+  var unsubscribeFromAuth = useRef(null);
 
   useEffect(() => {
-    unsubscribeFromAuth = auth.onAuthStateChanged(user => {
-      setInitialState({ currentUser: user });
-      console.log(user);
-      return () => unsubscribeFromAuth();
-    })
-  }, [])
+    unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
+      if (userAuth) {
+        const userRef = await createUserProfileDocument(userAuth);
 
+        userRef.onSnapshot(snapShot => {
+          setInitialState({
+            currentUser: {
+              id: snapShot.id,
+              ...snapShot.data(),
+              ...initialState
+            }
+          });
+        });
+      }
+
+      setInitialState({ currentUser: userAuth, ...initialState });
+      // below code prevented from proper sign in
+      // but was in the componentWillUnmount()
+      // return unsubscribeFromAuth();
+    });
+    return () => unsubscribeFromAuth();
+  }, []);
+
+  console.log(currentUser)
   return (
-    <>
-      <Header currentUser={initialState.currentUser}/>
+    <div>
+      <Header currentUser={currentUser} />
       <Switch>
-        <Route exact path="/" component={Homepage} />
-        <Route exact path="/shop" component={ShopPage} />
-        <Route exact path="/signin" component={SignInAndSignUp} />
+        <Route exact path="/" component={HomePage} />
+        <Route path="/shop" component={ShopPage} />
+        <Route path="/signin" component={SignInAndSignUp} />
       </Switch>
-    </>
+    </div>
   );
-}
+};
 
 export default App;

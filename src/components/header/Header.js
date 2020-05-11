@@ -33,6 +33,7 @@ const Header = ({ currentUser }) => {
           <li>
             {currentUser ? (
               <Link
+                to=" "
                 className="option"
                 onClick={() => auth.signOut()}
                 style={{ color: 'inherit', textDecoration: 'inherit' }}
