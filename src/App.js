@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { setCurrentUser } from './actions/userActions';
+import { setCurrentUser } from './redux/actions/userActions';
 
 import './App.scss';
 
