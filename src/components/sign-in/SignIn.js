@@ -3,7 +3,6 @@ import './sign-in.styles.scss';
 import FormInput from '../forminput/FormInput';
 import CustomButton from '../custombutton/CustomButton';
 import { auth, signInWithGoogle } from '../../firebase/firebase.utils';
-import PropTypes from 'prop-types';
 
 const SignIn = props => {
   const [formData, setFormData] = useState({
@@ -62,7 +61,5 @@ const SignIn = props => {
     </div>
   );
 };
-
-SignIn.propTypes = {};
 
 export default SignIn;
