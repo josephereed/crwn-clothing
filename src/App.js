@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import './App.scss';
 
@@ -18,10 +18,11 @@ import Header from './components/header/Header';
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 
 const App = ({ setCurrentUser, currentUser }) => {
-  var unsubscribeFromAuth = useRef(null);
-
+  
   useEffect(() => {
+    var unsubscribeFromAuth
     unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
+      //eslint--disable-next-line
       if (userAuth) {
         const userRef = await createUserProfileDocument(userAuth);
 
@@ -38,9 +39,9 @@ const App = ({ setCurrentUser, currentUser }) => {
       // even if the component that cares about the listener is no longer on the page
     });
     return () => unsubscribeFromAuth();
-  }, []);
+  }, [setCurrentUser]);
 
-  console.log(currentUser);
+  //console.log(currentUser);
   return (
     <div>
       <Header />

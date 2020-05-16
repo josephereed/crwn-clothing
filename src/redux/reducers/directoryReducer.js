@@ -40,7 +40,7 @@ const INITIAL_STATE = {
 }
 
 const directoryReducer = (state = INITIAL_STATE, action) => {
-  const { payload, type } = action;
+  const { type } = action;
   switch(type) {
     default:
       return state;
