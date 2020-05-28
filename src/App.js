@@ -2,10 +2,10 @@ import React, { useEffect } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import './App.scss';
 
-// Redux 
+// Redux
 import { connect } from 'react-redux';
 import { setCurrentUser } from './redux/actions/userActions';
-import { createStructuredSelector} from 'reselect';
+import { createStructuredSelector } from 'reselect';
 import { selectCurrentUser } from './redux/selectors/user.selectors';
 
 // Pages
@@ -15,12 +15,14 @@ import SignInAndSignUp from './pages/signin/SignInAndSignUp';
 import Checkout from './pages/checkout/Checkout';
 
 import Header from './components/header/Header';
-import { auth, createUserProfileDocument } from './firebase/firebase.utils';
+import {
+  auth,
+  createUserProfileDocument,
+} from './firebase/firebase.utils';
 
 const App = ({ setCurrentUser, currentUser }) => {
-  
   useEffect(() => {
-    var unsubscribeFromAuth
+    var unsubscribeFromAuth;
     unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
       //eslint--disable-next-line
       if (userAuth) {

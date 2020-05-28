@@ -4,6 +4,7 @@ import './collection-item.styles.scss';
 import { connect } from 'react-redux';
 import { addItem } from '../../redux/actions/cartActions';
 
+
 const CollectionItem = ({ item, addItem }) => {
   const { name, price, imageUrl } = item;
   return (

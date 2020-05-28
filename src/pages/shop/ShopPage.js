@@ -1,18 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route } from 'react-router-dom';
-import CollectionsOverview from '../../components/collections-overview/CollectionsOverview'
+import CollectionsOverview from '../../components/collections-overview/CollectionsOverview';
 import CollectionPage from '../collection/Collection';
+import { firestore } from '../../firebase/firebase.utils';
 
 const ShopPage = ({ match }) => {
-  //console.log(match)
+  var unsubscribeFromSnapshot = null;
+  useEffect(() => {
+    const collectionRef = firestore.collection('collections');
+    collectionRef.onSnapshot(async snapshot => {
+      console.log(snapshot);
+    });
+  }, []);
+
   return (
     <div className="shop-page">
       <Route exact path={`${match.path}`} component={CollectionsOverview} />
-      <Route path={`${match.path}/:collectionId`} component={ CollectionPage } />
+      <Route path={`${match.path}/:collectionId`} component={CollectionPage} />
     </div>
   );
 };
-
-
 
 export default ShopPage;
