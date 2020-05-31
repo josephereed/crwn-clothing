@@ -48,10 +48,9 @@ export const addCollectionAndDocuments = async (
 
   const batch = firestore.batch();
   objectsToAdd.forEach(obj => {
-    const newDocRef = collectionRef.doc();
+    const newDocRef = collectionRef.doc(obj.title);
     batch.set(newDocRef, obj);
   });
-
   return await batch.commit();
 };
 
@@ -68,9 +67,9 @@ export const convertCollectionsSnapshotToMap = collections => {
   });
 
   return transformedCollection.reduce((accumulator, collection) => {
-    accumulator[collection.title.toLowerCase()] = collection;
+    accumulator[collection.title.toLowerCase()] = collection
     return accumulator;
-  }, {});
+  }, {})
 };
 
 export const auth = firebase.auth();
