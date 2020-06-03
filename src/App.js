@@ -41,7 +41,7 @@ const App = ({ setCurrentUser, currentUser }) => {
       // even if the component that cares about the listener is no longer on the page
     });
     return () => unsubscribeFromAuth();
-  }, [setCurrentUser]);
+  }, []);
 
   //console.log(currentUser);
   return (

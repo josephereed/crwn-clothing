@@ -10,10 +10,16 @@
   .items {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
+    @media screen and (max-width: 800px){
+      grid-template-columns: 1fr 1fr;
+    }
 
     & .collection-item {
       margin: 0 5px 30px;
       width: 250px;
+      @media screen and (max-width: 800px){
+        width: 40vw;
+      }
     }
   }
 }
